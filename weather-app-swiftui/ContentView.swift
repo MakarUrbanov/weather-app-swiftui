@@ -1,14 +1,25 @@
 import SwiftUI
 
 struct ContentView: View {
-  var body: some View {
-    Text("Hello, world!")
-    .padding()
-  }
-}
+  @State var isLoading = true
+  @State var weather: RealtimeWeatherStruct?
 
-struct ContentView_Previews: PreviewProvider {
-  static var previews: some View {
-    ContentView()
+  var body: some View {
+    VStack {
+      if isLoading {
+        ProgressView()
+      } else {
+        if let weatherCurrent = weather?.current {
+          Text(String(weatherCurrent.tempC))
+          Text(String(weatherCurrent.feelslikeC))
+        }
+      }
+    }
+    .onAppear {
+      fetchWeather(city: "Sankt-Peterburg") { weather in
+        self.weather = weather
+        isLoading = false
+      }
+    }
   }
 }
