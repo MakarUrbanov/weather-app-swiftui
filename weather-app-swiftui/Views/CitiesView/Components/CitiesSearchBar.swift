@@ -8,6 +8,5 @@ struct CitiesSearchBar: View {
     VStack {
       SearchBar(text: $inputValue, placeholder: "Enter city")
     }
-    .padding(.top)
   }
 }

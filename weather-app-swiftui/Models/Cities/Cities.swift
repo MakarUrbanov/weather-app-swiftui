@@ -13,25 +13,37 @@ struct City: Codable, Identifiable {
 
 }
 
-class Cities: ObservableObject {
+class CitiesModel: ObservableObject {
   @Published var usersCities: [City] = [] {
-    didSet {
-      saveCitiesToUserDefaults()
+    willSet {
+      saveCitiesToUserDefaults(newValue)
     }
   }
 
   private func getCitiesFromUserDefaults() -> [City] {
-    let data = (UserDefaults.standard.array(forKey: UserDefaultsKeys.usersCities.rawValue) ?? []) as? [City]
+    guard let data = UserDefaults.standard.array(forKey: UserDefaultsKeys.usersCities.rawValue) as? [Data] else {
+      return []
+    }
 
-    return data ?? []
+    let encodedData = data.map {
+      try? JSONDecoder().decode(City.self, from: $0)
+    }
+    .compactMap {
+      $0
+    }
+
+    return encodedData
   }
 
   init() {
     usersCities = getCitiesFromUserDefaults()
   }
 
-  private func saveCitiesToUserDefaults() {
-    UserDefaults.standard.setValue(usersCities, forKeyPath: UserDefaultsKeys.usersCities.rawValue)
+  private func saveCitiesToUserDefaults(_ cities: [City]) {
+    let encodedCitiesArray = cities.map {
+      try? JSONEncoder().encode($0)
+    }
+    UserDefaults.standard.set(encodedCitiesArray, forKey: UserDefaultsKeys.usersCities.rawValue)
   }
 
   func addUsersCity(city newCity: RealtimeWeatherStruct) {

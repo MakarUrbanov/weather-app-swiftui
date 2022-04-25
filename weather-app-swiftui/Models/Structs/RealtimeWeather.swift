@@ -7,7 +7,7 @@ struct LocationStruct: Codable {
   let localtimeEpoch: Int
   let localtime: String
 
-  enum CodingKeys: String, CodingKey {
+  enum CodingKeys: String, Codable, CodingKey {
     case name, region, country, lat, lon
     case tzId = "tz_id"
     case localtimeEpoch = "localtime_epoch"
@@ -36,7 +36,7 @@ struct CurrentStruct: Codable {
   let feelslikeC, feelslikeF: Double
   let visKm, visMiles, uv, gustMph, gustKph: Double
 
-  enum CodingKeys: String, CodingKey {
+  enum CodingKeys: String, Codable, CodingKey {
     case lastUpdatedEpoch = "last_updated_epoch"
     case lastUpdated = "last_updated"
     case tempC = "temp_c"

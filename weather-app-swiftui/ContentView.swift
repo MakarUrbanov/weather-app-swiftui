@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ContentView: View {
+  @StateObject var Cities = CitiesModel()
+
   var body: some View {
     TabView {
       MainWeatherView()
@@ -10,5 +12,6 @@ struct ContentView: View {
     .background(Color.primary)
     .tabViewStyle(.page)
     .edgesIgnoringSafeArea(.all)
+    .environmentObject(Cities)
   }
 }

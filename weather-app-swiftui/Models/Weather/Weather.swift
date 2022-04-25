@@ -1,4 +1,4 @@
 import Foundation
 
-class Weather {
+class WeatherModel {
 }
