@@ -9,5 +9,6 @@ struct ContentView: View {
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(Color.primary)
     .tabViewStyle(.page)
+    .edgesIgnoringSafeArea(.all)
   }
 }

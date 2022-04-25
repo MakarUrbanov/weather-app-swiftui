@@ -4,7 +4,9 @@ import SwiftUI
 struct CitiesView: View {
   var body: some View {
     VStack {
-      Text("Cities View")
+      CitiesSearchBar()
+      Spacer()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
 }

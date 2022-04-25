@@ -6,5 +6,6 @@ struct MainWeatherView: View {
     VStack {
       Text("Main View")
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
 }
