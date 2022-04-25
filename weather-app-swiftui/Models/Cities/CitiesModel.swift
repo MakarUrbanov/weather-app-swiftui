@@ -1,7 +1,10 @@
 import Foundation
 
+let MAX_NON_UPDATED_TIME: TimeInterval = 60 * 5 // 5min
+
 struct City: Codable, Identifiable {
   var id: String
+  var lastUpdatedTime = Date().timeIntervalSince1970
   var location: LocationStruct
   var weather: CurrentStruct?
 
@@ -49,6 +52,18 @@ class CitiesModel: ObservableObject {
   func addUsersCity(city newCity: RealtimeWeatherStruct) {
     let city = City(city: newCity)
     let newCities = usersCities + [city]
+    usersCities = newCities
+  }
+
+  func updateCityData(city: City) {
+    let newCities = usersCities.map { oldCity -> City in
+      if oldCity.id == oldCity.id {
+        return city
+      }
+
+      return oldCity
+    }
+
     usersCities = newCities
   }
 }
