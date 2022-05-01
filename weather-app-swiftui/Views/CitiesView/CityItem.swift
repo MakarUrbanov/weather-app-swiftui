@@ -60,6 +60,7 @@ struct CityItem: View {
     }
     .frame(maxWidth: .infinity)
     .padding()
+    .background(Color.primary)
     .overlay(alignment: .bottom) {
       Divider()
       .background(Color.invertedPrimary)

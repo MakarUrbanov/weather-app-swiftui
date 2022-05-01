@@ -2,13 +2,11 @@ import Foundation
 import SwiftUI
 
 struct CitiesView: View {
+  @Binding var currentPage: CurrentPageKeys
+
   var body: some View {
     VStack {
-      Text("Cities")
-      .font(.largeTitle.weight(.bold))
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .padding(.leading)
-      .padding(.top)
+      Header(name: { Text("Cities") }, rightButton: { Button("Back", action: { currentPage = .mainPage }) })
 
       CitiesSearchBar()
 
