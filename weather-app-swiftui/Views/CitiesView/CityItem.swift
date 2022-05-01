@@ -10,26 +10,47 @@ struct CityItem: View {
   }
 
   var body: some View {
-    HStack {
-      VStack(alignment: .leading) {
-        Text(cityItemVM.city.location.name)
-        .fontWeight(.bold)
+    VStack {
+      HStack {
+        VStack(alignment: .leading) {
+          Text(cityItemVM.city.location.name)
+          .fontWeight(.bold)
 
-        Text(cityItemVM.getFormattedTime())
-        .fontWeight(.semibold)
-        .opacity(0.7)
+          Text(cityItemVM.getFormattedTime())
+          .fontWeight(.semibold)
+          .opacity(0.7)
+        }
 
+        Spacer()
+
+        HStack {
+          Text(cityItemVM.getTemperature())
+          .font(.system(size: 60, weight: .bold))
+          .padding(.trailing, -10)
+
+          AsyncImage(url: URL(string: "https:\(cityItemVM.city.weather?.condition.icon ?? "")")) { image in
+            image
+            .resizable()
+            .scaledToFit()
+            .frame(width: 25, height: 25)
+            .offset(y: -15)
+            .saturation(0.5)
+          } placeholder: {
+            ProgressView()
+            .offset(y: -15)
+            .frame(width: 25, height: 25)
+          }
+        }
+        .frame(height: 60)
+      }
+
+      HStack {
         Text(cityItemVM.city.weather?.condition.text ?? "")
         .fontWeight(.semibold)
         .padding(.top)
         .opacity(0.7)
-      }
 
-      Spacer()
-
-      VStack(alignment: .trailing) {
-        Text(cityItemVM.getTemperature())
-        .font(.system(size: 30, weight: .bold))
+        Spacer()
 
         Text("Feels like: \(cityItemVM.getTemperatureFeelsLike())")
         .fontWeight(.semibold)
