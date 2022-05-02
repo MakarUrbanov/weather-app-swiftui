@@ -85,15 +85,19 @@ struct SwipeableDeleteWrapper<Content: View>: View {
             .frame(width: trashWidth)
             .opacity(trashWidth / MAX_TRASH_WIDTH)
           }
+          .opacity(isTappedDelete ? 0.3 : 1)
           .frame(width: abs(xOffset))
 
           Rectangle()
           .fill(Color.black.opacity(0.5))
-          .onAppear {
-            self.itemWidth = geometry.size.width
+          .onChange(of: trashWidth) { newValue in
+            let itemWidth = geometry.size.width
+
+            if self.itemWidth != itemWidth {
+              self.itemWidth = itemWidth
+            }
           }
         }
-        .opacity(isTappedDelete ? 0.8 : 1)
         .gesture(onDeleteTapGesture)
       }
     }

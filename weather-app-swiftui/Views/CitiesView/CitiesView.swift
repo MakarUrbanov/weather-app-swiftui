@@ -3,17 +3,21 @@ import SwiftUI
 
 struct CitiesView: View {
   @Binding var currentPage: CurrentPageKeys
+  @State var text = ""
 
   var body: some View {
-    VStack {
-      Header(name: { Text("Cities") }, rightButton: { Button("Back", action: { currentPage = .mainPage }) })
+    NavigationView {
+      VStack {
+        CitiesList()
 
-      CitiesSearchBar()
-
-      CitiesList()
-
-      Spacer()
+        Spacer()
+      }
+      .navigationBarTitle(Text("Cities"), displayMode: .inline)
+      .navigationBarItems(trailing: Button("Back", action: { currentPage = .mainPage }))
+      .searchable(text: $text, prompt: "Look for something")
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .background(Color.primary)
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .navigationViewStyle(.stack)
   }
 }

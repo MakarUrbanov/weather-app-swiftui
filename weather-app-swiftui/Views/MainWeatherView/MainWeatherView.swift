@@ -5,23 +5,25 @@ struct MainWeatherView: View {
   @Binding var currentPage: CurrentPageKeys
 
   var body: some View {
-    VStack {
-      Header(name: {
-        Text("City")
-      }, rightButton: {
-        Button(action: {
-          currentPage = .cities
-        }, label: {
-          Image(systemName: "line.3.horizontal")
-          .resizable()
-          .aspectRatio(contentMode: .fit)
-          .frame(maxHeight: 14)
-        })
-      })
-      .foregroundColor(Color.invertedPrimary)
+    NavigationView {
+      VStack {
+        Text("Main View")
 
-      Spacer()
+        Spacer()
+      }
+      .navigationBarTitle(Text("City"), displayMode: .inline)
+      .navigationBarItems(trailing: Button(action: {
+        currentPage = .cities
+      }, label: {
+        Image(systemName: "line.3.horizontal")
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .frame(maxHeight: 14)
+      }))
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .foregroundColor(Color.invertedPrimary)
+      .background(Color.primary)
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .navigationViewStyle(.stack)
   }
 }
