@@ -3,6 +3,7 @@ import SwiftUI
 
 struct FetchedCitiesList: View {
   @StateObject var viewModel = FetchedCitiesListViewModel()
+  @EnvironmentObject var citiesViewModel: CitiesViewModel
   @Binding var searchText: String
 
   var body: some View {
@@ -10,7 +11,8 @@ struct FetchedCitiesList: View {
       ScrollView {
         ForEach(viewModel.cities) { city in
           Button(action: {
-
+            citiesViewModel.addFetchedCity(cityName: city.name)
+//            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
           }, label: {
             FetchedCityItem(city: city)
           })

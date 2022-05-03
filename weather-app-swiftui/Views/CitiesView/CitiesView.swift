@@ -27,6 +27,9 @@ struct CitiesView: View {
       .searchable(text: $searchText.currentValue, prompt: "Enter city")
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .background(Color.primary)
+      .onChange(of: viewModel.usersCities.count, perform: { _ in
+        searchText.currentValue.removeAll()
+      })
     }
     .navigationViewStyle(.stack)
     .environmentObject(viewModel)

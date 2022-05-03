@@ -37,19 +37,36 @@ class CitiesViewModel: ObservableObject {
 
   func addUsersCity(city newCity: RealtimeWeather) {
     let city = City(city: newCity)
-    let newCities = usersCities + [city]
-    usersCities = newCities
+    usersCities += [city]
   }
 
   func updateCityData(city: City) {
-    let newCities = usersCities.map { oldCity -> City in
-      if oldCity.id == oldCity.id {
-        return city
+    fetchWeather(city: city.location.name) { [self] weatherStruct in
+      if let weatherStruct = weatherStruct {
+        let newCity = City(city: weatherStruct)
+
+        if let cityIndex = usersCities.firstIndex(where: { oldCity in oldCity.id == newCity.id }) {
+          self.usersCities[cityIndex] = newCity
+        }
+      }
+    }
+  }
+
+  func deleteCity(id: String) {
+    self.usersCities.removeAll { city in
+      city.id == id
+    }
+  }
+
+  func addFetchedCity(cityName: String) {
+    fetchWeather(city: cityName) { [self] realtimeWeather in
+      guard let realtimeWeather = realtimeWeather else {
+        return print("Error \(self)")
       }
 
-      return oldCity
+      if self.usersCities.first(where: { city in city.location.name == realtimeWeather.location.name }) == nil {
+        addUsersCity(city: realtimeWeather)
+      }
     }
-
-    usersCities = newCities
   }
 }

@@ -11,8 +11,13 @@ class CityItemViewModel: ObservableObject {
   }
 
   func getFormattedTime() -> String {
-    let date = Date(timeIntervalSince1970: TimeInterval(city.location.localtimeEpoch))
     let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "YYYY-MM-DD HH:mm"
+
+    guard let date = dateFormatter.date(from: city.location.localtime) else {
+      return ""
+    }
+
     dateFormatter.dateFormat = "HH:mm"
     return dateFormatter.string(from: date)
   }
@@ -33,17 +38,5 @@ class CityItemViewModel: ObservableObject {
     }
 
     return "Error"
-  }
-
-  func updateCityData(completionHandler: @escaping (City?) -> Void) {
-    fetchWeather(city: city.location.name) { weatherStruct in
-      if let weatherStruct = weatherStruct {
-        let newCityData = City(city: weatherStruct)
-        self.city = newCityData
-        completionHandler(newCityData)
-      }
-
-      completionHandler(nil)
-    }
   }
 }

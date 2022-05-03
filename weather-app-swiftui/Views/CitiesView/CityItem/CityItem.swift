@@ -2,21 +2,21 @@ import Foundation
 import SwiftUI
 
 struct CityItem: View {
-  @EnvironmentObject var Cities: CitiesViewModel
-  @ObservedObject var cityItemVM: CityItemViewModel
+  @EnvironmentObject var citiesViewModel: CitiesViewModel
+  @ObservedObject var viewModel: CityItemViewModel
 
   init(city: City) {
-    self.cityItemVM = CityItemViewModel(city: city)
+    self.viewModel = CityItemViewModel(city: city)
   }
 
   var body: some View {
     VStack {
       HStack {
         VStack(alignment: .leading) {
-          Text(cityItemVM.city.location.name)
+          Text(viewModel.city.location.name)
           .fontWeight(.bold)
 
-          Text(cityItemVM.getFormattedTime())
+          Text(viewModel.getFormattedTime())
           .fontWeight(.semibold)
           .opacity(0.7)
         }
@@ -24,11 +24,11 @@ struct CityItem: View {
         Spacer()
 
         HStack {
-          Text(cityItemVM.getTemperature())
+          Text(viewModel.getTemperature())
           .font(.system(size: 60, weight: .bold))
           .padding(.trailing, -10)
 
-          AsyncImage(url: URL(string: "https:\(cityItemVM.city.weather?.condition.icon ?? "")")) { image in
+          AsyncImage(url: URL(string: "https:\(viewModel.city.weather?.condition.icon ?? "")")) { image in
             image
             .resizable()
             .scaledToFit()
@@ -45,14 +45,14 @@ struct CityItem: View {
       }
 
       HStack {
-        Text(cityItemVM.city.weather?.condition.text ?? "")
+        Text(viewModel.city.weather?.condition.text ?? "")
         .fontWeight(.semibold)
         .padding(.top)
         .opacity(0.7)
 
         Spacer()
 
-        Text("Feels like: \(cityItemVM.getTemperatureFeelsLike())")
+        Text("Feels like: \(viewModel.getTemperatureFeelsLike())")
         .fontWeight(.semibold)
         .padding(.top)
         .opacity(0.7)
@@ -66,12 +66,8 @@ struct CityItem: View {
       .background(Color.invertedPrimary)
     }
     .onAppear {
-      if cityItemVM.isNeedUpdate {
-        cityItemVM.updateCityData { newCityData in
-          if let newCityData = newCityData {
-            Cities.updateCityData(city: newCityData)
-          }
-        }
+      if viewModel.isNeedUpdate {
+        citiesViewModel.updateCityData(city: viewModel.city)
       }
     }
   }

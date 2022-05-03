@@ -9,7 +9,7 @@ class FetchedCitiesListViewModel: ObservableObject {
 
   func setCities(cities: [FetchedCity]?) {
     guard let correctCities = cities else {
-      return print("ERROR FetchedCitiesListViewModel")
+      return print("ERROR \(self)")
     }
 
     self.cities = correctCities
