@@ -5,7 +5,7 @@ struct CityItem: View {
   @EnvironmentObject var Cities: CitiesModel
   @ObservedObject var cityItemVM: CityItemVM
 
-  init(city: City) {
+  init(city: CityModel) {
     self.cityItemVM = CityItemVM(city: city)
   }
 

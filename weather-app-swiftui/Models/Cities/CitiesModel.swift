@@ -2,34 +2,20 @@ import Foundation
 
 let MAX_NON_UPDATED_TIME: TimeInterval = 60 * 5 // 5min
 
-struct City: Codable, Identifiable {
-  var id: String
-  var lastUpdatedTime = Date().timeIntervalSince1970
-  var location: LocationStruct
-  var weather: CurrentStruct?
-
-  init(city: RealtimeWeatherStruct) {
-    self.id = "\(city.location.lat)\(city.location.lon)"
-    self.location = city.location
-    self.weather = city.current
-  }
-
-}
-
 class CitiesModel: ObservableObject {
-  @Published var usersCities: [City] = [] {
+  @Published var usersCities: [CityModel] = [] {
     willSet {
       saveCitiesToUserDefaults(newValue)
     }
   }
 
-  private func getCitiesFromUserDefaults() -> [City] {
+  private func getCitiesFromUserDefaults() -> [CityModel] {
     guard let data = UserDefaults.standard.array(forKey: UserDefaultsKeys.usersCities.rawValue) as? [Data] else {
       return []
     }
 
     let encodedData = data.map {
-      try? JSONDecoder().decode(City.self, from: $0)
+      try? JSONDecoder().decode(CityModel.self, from: $0)
     }
     .compactMap {
       $0
@@ -42,7 +28,7 @@ class CitiesModel: ObservableObject {
     usersCities = getCitiesFromUserDefaults()
   }
 
-  private func saveCitiesToUserDefaults(_ cities: [City]) {
+  private func saveCitiesToUserDefaults(_ cities: [CityModel]) {
     let encodedCitiesArray = cities.map {
       try? JSONEncoder().encode($0)
     }
@@ -50,13 +36,13 @@ class CitiesModel: ObservableObject {
   }
 
   func addUsersCity(city newCity: RealtimeWeatherStruct) {
-    let city = City(city: newCity)
+    let city = CityModel(city: newCity)
     let newCities = usersCities + [city]
     usersCities = newCities
   }
 
-  func updateCityData(city: City) {
-    let newCities = usersCities.map { oldCity -> City in
+  func updateCityData(city: CityModel) {
+    let newCities = usersCities.map { oldCity -> CityModel in
       if oldCity.id == oldCity.id {
         return city
       }
