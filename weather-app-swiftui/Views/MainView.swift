@@ -7,15 +7,16 @@ enum CurrentPageKeys: String {
 
 struct MainView: View {
   @State var currentPage: CurrentPageKeys = .mainPage
+  @State var selectedCity: City?
 
   var body: some View {
     VStack {
       switch currentPage {
       case .mainPage:
-        MainWeatherView(currentPage: $currentPage)
+        MainWeatherView(currentPage: $currentPage, selectedCity: $selectedCity)
 
       case .cities:
-        CitiesView(currentPage: $currentPage)
+        CitiesView(currentPage: $currentPage, selectedCity: $selectedCity)
       }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)

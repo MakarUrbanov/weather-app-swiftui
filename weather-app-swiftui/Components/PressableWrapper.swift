@@ -4,25 +4,27 @@ import SwiftUI
 struct PressableWrapper<Content>: View where Content: View {
   var content: Content
   var activeOpacity: Double
-  @State var isTapped = false
+  @State var isPressed = false
+  var perform: () -> Void
 
-  init(activeOpacity: Double = 0.8, @ViewBuilder content: () -> Content) {
+  init(activeOpacity: Double = 0.8, @ViewBuilder content: () -> Content, perform: @escaping () -> Void) {
     self.content = content()
     self.activeOpacity = activeOpacity
+    self.perform = perform
   }
 
   var body: some View {
-    let onTapGestureHandler = DragGesture(minimumDistance: 0, coordinateSpace: .global)
-    .onChanged({ _ in
-      isTapped = true
-    })
-    .onEnded({ _ in
-      isTapped = false
-    })
-
     content
     .contentShape(Rectangle())
-    .gesture(onTapGestureHandler)
-    .opacity(isTapped ? activeOpacity : 1)
+    .onTapGesture {
+      perform()
+    }
+    .onLongPressGesture(minimumDuration: 3,
+      maximumDistance: 10,
+      perform: {
+      }, onPressingChanged: { bool in
+      isPressed = bool
+    })
+    .opacity(isPressed ? 0.8 : 1)
   }
 }

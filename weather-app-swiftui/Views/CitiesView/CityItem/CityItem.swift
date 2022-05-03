@@ -58,6 +58,7 @@ struct CityItem: View {
         .opacity(0.7)
       }
     }
+    .foregroundColor(Color.invertedPrimary)
     .frame(maxWidth: .infinity)
     .padding()
     .background(Color.primary)

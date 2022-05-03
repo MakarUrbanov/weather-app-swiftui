@@ -5,6 +5,8 @@ struct CitiesView: View {
   @StateObject var viewModel: CitiesViewModel = CitiesViewModel()
 
   @Binding var currentPage: CurrentPageKeys
+  @Binding var selectedCity: City?
+
   @StateObject var searchText = DebouncedState(initialValue: "", delay: 300)
 
   var body: some View {
@@ -12,7 +14,7 @@ struct CitiesView: View {
       ZStack {
 
         VStack {
-          CitiesList()
+          CitiesList(selectedCity: $selectedCity, currentPage: $currentPage)
 
           Spacer()
         }

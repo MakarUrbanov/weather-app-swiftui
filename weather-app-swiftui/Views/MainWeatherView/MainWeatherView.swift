@@ -3,11 +3,12 @@ import SwiftUI
 
 struct MainWeatherView: View {
   @Binding var currentPage: CurrentPageKeys
+  @Binding var selectedCity: City?
 
   var body: some View {
     NavigationView {
       VStack {
-        Text("Main View")
+        Text(selectedCity?.location.name ?? "Main page")
 
         Spacer()
       }
