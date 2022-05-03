@@ -1,10 +1,10 @@
 import Foundation
 import SwiftUI
 
-struct SearchList: View {
+struct FetchedCitiesList: View {
   var body: some View {
     VStack {
-      Text("")
+      Text("Search")
     }
   }
 }

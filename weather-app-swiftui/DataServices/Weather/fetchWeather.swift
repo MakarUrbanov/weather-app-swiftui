@@ -1,7 +1,7 @@
 import Foundation
 import Alamofire
 
-func fetchWeather(city: String, completionHandler: @escaping (RealtimeWeatherStruct?) -> Void) {
+func fetchWeather(city: String, completionHandler: @escaping (RealtimeWeather?) -> Void) {
   let apiKey = getApiKey()
   let urlString = "https://api.weatherapi.com/v1/current.json"
 
@@ -15,7 +15,7 @@ func fetchWeather(city: String, completionHandler: @escaping (RealtimeWeatherStr
     return completionHandler(nil)
   }
 
-  AF.request(request).validate().responseDecodable(of: RealtimeWeatherStruct.self) { (response) in
+  AF.request(request).validate().responseDecodable(of: RealtimeWeather.self) { (response) in
     guard let value = response.value else {
       return completionHandler(nil)
     }

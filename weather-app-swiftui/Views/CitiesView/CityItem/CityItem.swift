@@ -2,11 +2,11 @@ import Foundation
 import SwiftUI
 
 struct CityItem: View {
-  @EnvironmentObject var Cities: CitiesModel
-  @ObservedObject var cityItemVM: CityItemVM
+  @EnvironmentObject var Cities: CitiesViewModel
+  @ObservedObject var cityItemVM: CityItemViewModel
 
-  init(city: CityModel) {
-    self.cityItemVM = CityItemVM(city: city)
+  init(city: City) {
+    self.cityItemVM = CityItemViewModel(city: city)
   }
 
   var body: some View {

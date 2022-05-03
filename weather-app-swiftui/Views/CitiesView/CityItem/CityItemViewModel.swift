@@ -1,10 +1,10 @@
 import Foundation
 
-class CityItemVM: ObservableObject {
-  @Published var city: CityModel
+class CityItemViewModel: ObservableObject {
+  @Published var city: City
   var isNeedUpdate = false
 
-  init(city: CityModel) {
+  init(city: City) {
     let lastUpdatedTime = city.lastUpdatedTime
     isNeedUpdate = Date().timeIntervalSince1970 - Double(lastUpdatedTime) >= MAX_NON_UPDATED_TIME
     self.city = city
@@ -35,10 +35,10 @@ class CityItemVM: ObservableObject {
     return "Error"
   }
 
-  func updateCityData(completionHandler: @escaping (CityModel?) -> Void) {
+  func updateCityData(completionHandler: @escaping (City?) -> Void) {
     fetchWeather(city: city.location.name) { weatherStruct in
       if let weatherStruct = weatherStruct {
-        let newCityData = CityModel(city: weatherStruct)
+        let newCityData = City(city: weatherStruct)
         self.city = newCityData
         completionHandler(newCityData)
       }

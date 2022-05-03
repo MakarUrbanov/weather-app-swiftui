@@ -2,6 +2,8 @@ import Foundation
 import SwiftUI
 
 struct CitiesView: View {
+  @StateObject var viewModel: CitiesViewModel = CitiesViewModel()
+
   @Binding var currentPage: CurrentPageKeys
   @State var searchText = ""
   @State var isSearch: Bool = false
@@ -12,11 +14,7 @@ struct CitiesView: View {
         CitiesList()
         .overlay {
           if isSearch {
-            VStack {
-              Text("Search")
-
-              Spacer()
-            }
+            FetchedCitiesList()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.primary)
           }
@@ -38,5 +36,6 @@ struct CitiesView: View {
       .background(Color.primary)
     }
     .navigationViewStyle(.stack)
+    .environmentObject(viewModel)
   }
 }

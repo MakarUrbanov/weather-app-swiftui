@@ -2,10 +2,10 @@ import Foundation
 import SwiftUI
 
 struct CitiesList: View {
-  @EnvironmentObject var Cities: CitiesModel
+  @EnvironmentObject var viewModel: CitiesViewModel
 
   var body: some View {
-    ForEach(Cities.usersCities) { city in
+    ForEach(viewModel.usersCities) { city in
       SwipeableDeleteWrapper(content: {
         CityItem(city: city)
       }, onDelete: {

@@ -1,7 +1,7 @@
 import Foundation
 import Alamofire
 
-func fetchCityNames(cityName: String) {
+func fetchCityNames(cityName: String, completionHandler: @escaping ([FetchedCity]?) -> Void) {
   let apiKey = getApiKey()
   let urlString = "https://api.weatherapi.com/v1/search.json"
 
@@ -10,4 +10,16 @@ func fetchCityNames(cityName: String) {
     URLQueryItem(name: "q", value: cityName),
     URLQueryItem(name: "aqi", value: "no")
   ]
+
+  guard let request = createURLComponents(string: urlString, queryItems: queryItems) else {
+    return completionHandler(nil)
+  }
+
+  AF.request(request).validate().responseDecodable(of: [FetchedCity].self) { (response) in
+    guard let value = response.value else {
+      return completionHandler(nil)
+    }
+
+    return completionHandler(value)
+  }
 }

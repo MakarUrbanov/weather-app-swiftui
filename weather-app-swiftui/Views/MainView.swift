@@ -5,8 +5,7 @@ enum CurrentPageKeys: String {
   case cities
 }
 
-struct ContentView: View {
-  @StateObject var Cities = CitiesModel()
+struct MainView: View {
   @State var currentPage: CurrentPageKeys = .mainPage
 
   var body: some View {
@@ -23,6 +22,5 @@ struct ContentView: View {
     .background(Color.primary)
     .edgesIgnoringSafeArea(.horizontal)
     .edgesIgnoringSafeArea(.bottom)
-    .environmentObject(Cities)
   }
 }

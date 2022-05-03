@@ -1,6 +1,6 @@
 import Foundation
 
-struct LocationStruct: Codable {
+struct RealtimeWeatherLocation: Codable {
   let name, region, country: String
   let lat, lon: Double
   let tzId: String
@@ -15,18 +15,18 @@ struct LocationStruct: Codable {
   }
 }
 
-struct ConditionStruct: Codable {
+struct RealtimeWeatherCurrentCondition: Codable {
   let text: String
   let icon: String
   let code: Int
 }
 
-struct CurrentStruct: Codable {
+struct RealtimeWeatherCurrent: Codable {
   let lastUpdatedEpoch: Int
   let lastUpdated: String
   let tempC, isDay: Double
   let tempF: Double
-  let condition: ConditionStruct
+  let condition: RealtimeWeatherCurrentCondition
   let windMph, windKph: Double
   let windDegree: Int
   let windDir: String
@@ -62,7 +62,7 @@ struct CurrentStruct: Codable {
   }
 }
 
-struct RealtimeWeatherStruct: Codable {
-  let location: LocationStruct
-  let current: CurrentStruct?
+struct RealtimeWeather: Codable {
+  let location: RealtimeWeatherLocation
+  let current: RealtimeWeatherCurrent?
 }
