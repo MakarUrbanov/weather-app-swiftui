@@ -5,33 +5,26 @@ struct CitiesView: View {
   @StateObject var viewModel: CitiesViewModel = CitiesViewModel()
 
   @Binding var currentPage: CurrentPageKeys
-  @State var searchText = ""
-  @State var isSearch: Bool = false
+  @StateObject var searchText = DebouncedState(initialValue: "", delay: 300)
 
   var body: some View {
     NavigationView {
-      VStack {
-        CitiesList()
-        .overlay {
-          if isSearch {
-            FetchedCitiesList()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.primary)
-          }
+      ZStack {
+
+        VStack {
+          CitiesList()
+
+          Spacer()
         }
 
-        Spacer()
+        if !searchText.currentValue.isEmpty {
+          FetchedCitiesList(searchText: $searchText.debouncedValue)
+        }
+
       }
       .navigationBarTitle(Text("Cities"), displayMode: .inline)
       .navigationBarItems(trailing: Button("Back", action: { currentPage = .mainPage }))
-      .searchable(text: $searchText, prompt: "Enter city")
-      .onChange(of: searchText) { newValue in
-        if newValue.isEmpty {
-          isSearch = false
-        } else {
-          isSearch = true
-        }
-      }
+      .searchable(text: $searchText.currentValue, prompt: "Enter city")
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .background(Color.primary)
     }

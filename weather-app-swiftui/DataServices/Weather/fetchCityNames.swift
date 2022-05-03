@@ -1,13 +1,13 @@
 import Foundation
 import Alamofire
 
-func fetchCityNames(cityName: String, completionHandler: @escaping ([FetchedCity]?) -> Void) {
+func fetchCityNames(searchString: String, completionHandler: @escaping ([FetchedCity]?) -> Void) {
   let apiKey = getApiKey()
   let urlString = "https://api.weatherapi.com/v1/search.json"
 
   let queryItems = [
     URLQueryItem(name: "key", value: apiKey),
-    URLQueryItem(name: "q", value: cityName),
+    URLQueryItem(name: "q", value: searchString),
     URLQueryItem(name: "aqi", value: "no")
   ]
 
