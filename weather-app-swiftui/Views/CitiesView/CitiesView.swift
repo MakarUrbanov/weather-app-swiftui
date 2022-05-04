@@ -25,7 +25,6 @@ struct CitiesView: View {
 
       }
       .navigationBarTitle(Text("Cities"), displayMode: .inline)
-      .navigationBarItems(trailing: Button("Back", action: { currentPage = .mainPage }))
       .searchable(text: $searchText.currentValue, prompt: "Enter city")
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .background(Color.primary)

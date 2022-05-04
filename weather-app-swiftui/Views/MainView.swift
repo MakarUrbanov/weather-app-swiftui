@@ -13,7 +13,7 @@ struct MainView: View {
     VStack {
       switch currentPage {
       case .mainPage:
-        MainWeatherView(currentPage: $currentPage, selectedCity: $selectedCity)
+        SelectedCityWeatherView(currentPage: $currentPage, selectedCity: selectedCity)
 
       case .cities:
         CitiesView(currentPage: $currentPage, selectedCity: $selectedCity)
